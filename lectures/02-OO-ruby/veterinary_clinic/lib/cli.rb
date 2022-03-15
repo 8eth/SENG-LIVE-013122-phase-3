@@ -10,7 +10,7 @@ $clinics = [
     { id: 3, clinic_name: "Pets R Us", address: "333 Animal Way", phone: "555-555-5555"}
 ]
 
-def initialize_app
+def menu
 
     # char_space = "\n"
 
@@ -34,23 +34,34 @@ def initialize_app
         
         when "5"
             create_patient
+            # menu
         when "4"
             # .map returns an Array
             clinics_array = $clinics.map{|clinic| clinic[:clinic_name]}
             puts clinics_array
+            # menu
         when "3"
             # .map returns an Array
-            patients_array = $patients.map{|patient| patient[:species]}
+            # patients_array = $patients.map{|patient| patient[:species]}
             puts patients_array
+            # menu
         when "2"
             $clinics.each { |clinic| puts clinic }
+            # menu
         when "1"
-            $patients.each { |patient| puts patient }
+            # $patients.each { |patient| puts patient }
+            puts Patient.all
+            #recursive method
+            # menu
         when "0"
             puts "Goodbye!"
         end
         
     # Menu Logic (End)
+end
+
+def initialize_app
+    menu
 end
 
 def create_patient
@@ -66,18 +77,27 @@ def create_patient
     new_phone = gets.strip
 
     # create hash literal for each new_patient
-    new_patient = {
-        id: $patients.length + 1,
-        species: new_species,
-        age: new_age,
-        name: new_name,
-        owner: new_owner,
-        phone: new_phone
-    }
+#    new_patient = {
+#         id: $patients.length + 1,
+#         species: new_species,
+#         age: new_age,
+#         name: new_name,
+#         owner: new_owner,
+#         phone: new_phone
+#     }
 
+    new_patient = Patient.new (
+        5,
+        new_species,
+        new_age, 
+        new_name,
+        new_owner,
+        new_phone
+    )
     # add ("shovel") new_patient to $patients 
-    $patients << new_patient
+    # $patients << new_patient
     
     # output updated list of $patients
-    puts $patients
+    # puts $patients
+    puts Patient.all
 end
