@@ -1,8 +1,8 @@
-# $patients = [
-#     { species:"dog", age: "2", name:"Jack", owner:"John Smith", phone: "999-999-9999"},
-#     { species:"bird", age: "3", name:"Mia", owner:"Jane Doe", phone: "888-888-8888"},
-#     { species:"cat", age: "4", name:"Grace", owner:"Louis", phone: "777-777-7777"},
-# ]
+$patients = [
+    { species:"dog", age: "2", name:"Jack", owner:"John Smith", phone: "999-999-9999"},
+    { species:"bird", age: "3", name:"Mia", owner:"Jane Doe", phone: "888-888-8888"},
+    { species:"cat", age: "4", name:"Grace", owner:"Louis", phone: "777-777-7777"},
+]
 
 $clinics = [
     { clinic_name: "Flatiron Veterinary Clinic", address: "111 Hacker Way", phone: "777-777-7777"},
@@ -11,6 +11,18 @@ $clinics = [
 ]
 
 def initialize_app
+    seed
+    menu
+end
+
+def try_again
+    puts "Sorry, that option doesn't exist. Please try again."
+    menu
+end
+
+def return_to_menu
+    puts "Press any key to return"
+    gets.strip
     menu
 end
 
@@ -42,7 +54,7 @@ def menu
         menu
     when "3"
         # .map returns an Array
-        patients_array = Patient.all.map{|patient| patient[:species]}
+        patients_array = all_species
         puts patients_array
         menu
     when "2"
@@ -61,12 +73,16 @@ def menu
                 puts "Phone: #{patient.phone}"
                 puts "-----------------------"
             }
+            return_to_menu
         else
             puts "\n" + "No Patients!"
-        end
-        menu      
+            return_to_menu
+        end 
+        #menu
     when "0"
         puts "Goodbye!"
+    else
+        try_again
     end
 end
     
@@ -99,6 +115,16 @@ def create_patient
         new_owner,
         new_phone
     );
+end
+
+def seed
+    $patient.each {|patient| Patient.new 
+        patient[:species], 
+        patient[:age], 
+        patient[:name], 
+        patient[:owner], 
+        patient[:phone]
+    }
 end
 
 # New Patient Logic (End)

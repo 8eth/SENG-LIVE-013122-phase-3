@@ -24,6 +24,20 @@ class Patient
         @@all
     end
 
+    def self.all_species
+        @@all.map {|patient| patient.species}.uniq
+    end
+
+    def self.find_patient (name, owner)
+        #self.all this is the same as @@all
+        #Patient.all this is the same as @@all
+        @@all.find { |patient| patient.name == name && patient.owner == owner}
+    end
+
+#    def delete_patient
+
+#    end
+
     # Instance method (new_patient.give_name)
     def give_name
         @name

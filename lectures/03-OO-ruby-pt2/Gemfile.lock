@@ -9,6 +9,7 @@ GEM
     require_all (3.0.0)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-darwin-19
   x86_64-darwin-20
 
@@ -17,4 +18,4 @@ DEPENDENCIES
   require_all (~> 3.0)
 
 BUNDLED WITH
-   2.2.27
+   2.3.9
