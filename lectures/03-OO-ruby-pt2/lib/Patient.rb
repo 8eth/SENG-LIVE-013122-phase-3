@@ -1,47 +1,54 @@
 class Patient
-    attr_reader :id
-    attr_accessor :species, :age, :name, :owner, :phone
+    attr_accessor :id, :species, :age, :name, :owner, :phone
 
+    # Patient.new(params)
     @@all = []
 
-    # Public / Private Method?
-    def initialize(species, age, name, owner, phone)
-        @id  = @@all.length + 1
-        @species = species
-        @age = age
-        @name = name
-        @owner = owner
-        @phone = phone
-
-        # binding.pry
+    def initialize(attributes)
+        attributes.each do |key, value| 
+          self.send("#{key}=", value)
+        end
 
         add_self
     end
 
-    # Class method (Patient.all)
-    # self => Patient class
-    def self.all
-        @@all
-    end
+    # Class Methods
 
-    def self.all_species
-        @@all.map {|patient| patient.species}.uniq
-    end
+        # Patient.all
+        # self => Patient class
+        def self.all
+            @@all
+        end
 
-    def self.find_patient (name, owner)
-        #self.all this is the same as @@all
-        #Patient.all this is the same as @@all
-        @@all.find { |patient| patient.name == name && patient.owner == owner}
-    end
+        def self.all_species
+            self.all.map { |p| p.species }.uniq
+            # @@all.map { |p| p.species }.uniq
+        end
 
-#    def delete_patient
+        # { species:"dog", age: "2", name:"Jack", owner:"John Smith", phone: "999-999-9999"},
+        def self.find_patient(name, owner)
+            # self.all
+            # find => Returns the first matching instance
+            patient = @@all.find { |p| p.name == name && p.owner == owner }
+            
+            if patient 
+                patient.name 
+            end
+        end
 
-#    end
+    # Instance Methods
 
-    # Instance method (new_patient.give_name)
-    def give_name
-        @name
-    end
+        # new_patient.give_name
+        def give_name
+            @name
+        end 
+
+        def delete_patient
+            # binding.pry
+           
+            @@all = @@all.filter { |p| p != self }
+           puts "#{self.name} was removed from the system."
+        end
 
     private
 
@@ -50,3 +57,10 @@ class Patient
         @@all << self
     end
 end
+
+class Cat < Patient
+    # Inherits instance / class methods, etc. 
+end
+
+# new_cat = Cat.new
+# new_cat.give_name => "Milo"
