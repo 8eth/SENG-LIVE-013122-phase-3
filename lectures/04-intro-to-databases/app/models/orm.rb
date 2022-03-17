@@ -32,6 +32,12 @@ class PatientORM
         # method hints => ".each", ".respond_to?", ".send"
         # https://apidock.com/ruby/Object/respond_to%3F
         # https://apidock.com/ruby/Object/send
+
+        attributes.each do |key, value|
+            if self.respond_to?("#{key}=")
+                self.send("#{key}=", value)
+            end
+        end
     end
 
     def save
@@ -47,7 +53,11 @@ class PatientORM
         # https://www.rubydoc.info/github/luislavena/sqlite3-ruby/SQLite3/Database#execute-instance_method
         # https://www.rubydoc.info/github/luislavena/sqlite3-ruby/SQLite3%2FDatabase:last_insert_row_id
 
+        DB.execute(sql, self.species, self.name, self.age, self.owner, self.number)
+        self.id = DB.last_insert_row_id
+
         # NOTE => Remember to return "self" instance
+        self
     end
 
     def self.create(args)
@@ -55,6 +65,10 @@ class PatientORM
         # create / add new PatientORM class instances to DB
         
         # NOTE => Remember to return "patient" instance
+
+        new_patient = PatientORM.new(args)
+        new_patient.save
+        # new_patient
     end
 
     def self.all 
@@ -65,5 +79,14 @@ class PatientORM
 
         # NOTE => Remember to return "mapped_resources" as an iterable list
         # of patients
+
+        patients = DB.execute(SELECT * FROM patients)
+
+        mapped_resources = patients.map do |patient|
+            self.new(patient) # self is PatientORM
+        end
+
+        return mapped_resources
+
     end
 end 
