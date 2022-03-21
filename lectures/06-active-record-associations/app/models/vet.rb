@@ -46,6 +46,7 @@ class Vet < ActiveRecord::Base
         self.patients.maximum("age") #this returns the age of the oldest patient of a specific vet
         # self.patients.maximum(:age) #this also works
 
+    
         # oldest_patient = self.patients.max_by { |p| p.age }.age
         # oldest_patient.age
     end 
