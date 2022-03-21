@@ -12,6 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2022_02_07_155407) do
 
+  create_table "appointments", force: :cascade do |t|
+    t.date "date"
+    t.integer "vet_id"
+    t.integer "patient_id"
+  end
+
   create_table "clinics", force: :cascade do |t|
     t.string "clinic_name"
     t.string "address"
@@ -28,6 +34,13 @@ ActiveRecord::Schema.define(version: 2022_02_07_155407) do
     t.string "phone"
     t.boolean "active"
     t.integer "clinic_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "vets", force: :cascade do |t|
+    t.string "vet_name"
+    t.string "speciality"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

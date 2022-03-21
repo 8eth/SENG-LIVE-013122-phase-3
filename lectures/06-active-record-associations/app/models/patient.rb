@@ -7,4 +7,7 @@ class Patient < ActiveRecord::Base
     # one Patient with many Appointments and many Vets through Appointments.
 
     # NOTE => Remember that the order of Active Record macros matters!
+    has_many :appointments
+    has_many :vets, through: :appointments
+
 end 
