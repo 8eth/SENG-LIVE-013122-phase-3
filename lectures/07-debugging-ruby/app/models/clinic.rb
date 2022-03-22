@@ -7,24 +7,31 @@ class Clinic < ActiveRecord::Base
 
     # Return all clinic names
     def self.all_clinic_names
+        self.pluck(:clinic_name)
+        # self.all.pluck(:clinic_name) #?
     end
 
     # Return total number of clinics
     def self.clinic_count
+        self.count
+        # self.all.length #another option
     end
 
     # Return clinic with least number of patients
     def self.least_patients
+        self.all.min_by { |c| c.patients.length}
     end
 
     # Instance Methods
 
     # Return clinic's total number of patients
     def patient_count
+        self.patients.length
     end
 
     # Return clinic's patient names
     def patient_names
+        self.patients.pluck(:name)
     end
 end 
 
